@@ -32,7 +32,9 @@ const onConnection = (socket: MySocket) => {
       s.handshake.auth.user ? users.push(s.handshake.auth.user) : null,
     );
 
-    const index = users.findIndex((u) => u.id === socket.handshake.auth.user.id);
+    const index = users.findIndex(
+      (u) => u.id === socket.handshake.auth.user.id,
+    );
     if (index > -1) {
       users.splice(index, 1);
     }
@@ -45,4 +47,6 @@ const onConnection = (socket: MySocket) => {
 
 io.on('connection', onConnection);
 
-io.listen(8080);
+io.listen(parseInt(process.env.PORT) || 8080);
+
+console.log(`Realtime server is listening on port ${process.env.PORT || 8080}`);
